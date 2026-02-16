@@ -16,6 +16,8 @@ if "not_qr" not in st.session_state:
     st.session_state.not_qr = False
 if "not_cheoHoa" not in st.session_state:
     st.session_state.not_cheoHoa = False
+if "not_svd" not in st.session_state:
+    st.session_state.svd = False
 
 #Callbacks
 def to_transpose():
@@ -30,6 +32,8 @@ def to_qr():
     st.session_state.not_qr = True
 def to_cheoHoa():
     st.session_state.not_cheoHoa = True
+def to_svd():
+    st.session_state.not_svd = True
 
 #Tieu de
 with st.container(border = True):
@@ -89,3 +93,13 @@ if st.session_state.get("not_cheoHoa"):
         st.dataframe(D)
         st.write("P^-1:")
         st.dataframe(P_inverse)
+
+st.button("SVD", on_click = to_svd)
+if st.session_state.get("not_svd"):
+    U, S, Vt = ml.svd(editable_df)
+    st.write("U:")
+    st.dataframe(U)
+    st.write("S:")
+    st.dataframe(np.diag(S))
+    st.write("Vt:")
+    st.dataframe(Vt)

@@ -41,3 +41,9 @@ def cheo_hoa(matrix):
     p_inversed = np.linalg.inv(p)
     return p, diagonal, p_inversed
 
+def svd(matrix):
+    svd_matrix = np.array(matrix)
+    u, s, vt = np.linalg.svd(svd_matrix)
+    return u, s, vt
+
+

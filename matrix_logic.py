@@ -28,3 +28,16 @@ def qr_factorization(matrix):
     qr_matrix = np.array(matrix)
     q,r = np.linalg.qr(qr_matrix)
     return (q, r)
+
+def cheo_hoa(matrix):
+    cheo_hoa_matrix = np.array(matrix)
+    eigen_values, eigen_vectors = np.linalg.eig(cheo_hoa_matrix)
+    diagonal = np.diag(eigen_values)
+    p = eigen_vectors
+    min_vals = p.min(axis=0)
+    for i in range(len(min_vals)):
+        for j in range(len(min_vals)):
+            p[j,i] //= min_vals[i]
+    p_inversed = np.linalg.inv(p)
+    return p, diagonal, p_inversed
+

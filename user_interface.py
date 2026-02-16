@@ -14,6 +14,8 @@ if "not_inversed" not in st.session_state:
     st.session_state.not_inversed = False
 if "not_qr" not in st.session_state:
     st.session_state.not_qr = False
+if "not_cheoHoa" not in st.session_state:
+    st.session_state.not_cheoHoa = False
 
 #Callbacks
 def to_transpose():
@@ -26,6 +28,8 @@ def to_inverse():
     st.session_state.not_inversed = True
 def to_qr():
     st.session_state.not_qr = True
+def to_cheoHoa():
+    st.session_state.not_cheoHoa = True
 
 #Tieu de
 with st.container(border = True):
@@ -72,3 +76,16 @@ if st.session_state.get("not_qr"):
     st.dataframe(Q)
     st.write("R:")
     st.dataframe(R)
+
+st.button("Cheo Hoa", on_click = to_cheoHoa)
+if st.session_state.get("not_cheoHoa"):
+    if editable_df.shape[0] != editable_df.shape[1]:
+        st.write("Khong la ma tran vuong")
+    else:
+        P, D, P_inverse = ml.cheo_hoa(editable_df)
+        st.write("P:")
+        st.dataframe(P)
+        st.write("D:")
+        st.dataframe(D)
+        st.write("P^-1:")
+        st.dataframe(P_inverse)

@@ -8,12 +8,17 @@ if "not_transposed" not in st.session_state:
     st.session_state.is_transposed = False
 if "not_determinant" not in st.session_state:
     st.session_state.determinant = False
+if "not_rank" not in st.session_state:
+    st.session_state.not_rank = False
+
 
 #Callbacks
 def to_transpose():
     st.session_state.not_transposed = True
 def to_determinant():
     st.session_state.not_determinant = True
+def to_rank():
+    st.session_state.not_rank = True
 
 #Tieu de
 with st.container(border = True):
@@ -39,3 +44,8 @@ if st.session_state.get("not_determinant"):
         st.write(result)
     else:
         st.write(round(result,5))
+
+st.button("Rank", on_click = to_rank)
+if st.session_state.get("not_rank"):
+    result = ml.rank(editable_df)
+    st.write(result.astype(int))

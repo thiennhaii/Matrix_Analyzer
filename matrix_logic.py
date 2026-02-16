@@ -9,3 +9,6 @@ def determinant(matrix):
         return np.linalg.det(matrix)
     else:
         return "Khong la ma tran vuong"
+
+def rank(matrix):
+    return np.linalg.matrix_rank(matrix)

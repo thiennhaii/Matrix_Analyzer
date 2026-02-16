@@ -10,7 +10,10 @@ if "not_determinant" not in st.session_state:
     st.session_state.determinant = False
 if "not_rank" not in st.session_state:
     st.session_state.not_rank = False
-
+if "not_inversed" not in st.session_state:
+    st.session_state.not_inversed = False
+if "not_qr" not in st.session_state:
+    st.session_state.not_qr = False
 
 #Callbacks
 def to_transpose():
@@ -19,6 +22,10 @@ def to_determinant():
     st.session_state.not_determinant = True
 def to_rank():
     st.session_state.not_rank = True
+def to_inverse():
+    st.session_state.not_inversed = True
+def to_qr():
+    st.session_state.not_qr = True
 
 #Tieu de
 with st.container(border = True):
@@ -34,18 +41,34 @@ editable_df = st.data_editor(df_empty)
 #Ket qua
 st.button("Transpose", on_click = to_transpose)
 if st.session_state.get("not_transposed"):
-    resulted_matrix = ml.transpose_matrix(editable_df)
-    st.dataframe(resulted_matrix.astype(int))
+    transposed_matrix = ml.transpose_matrix(editable_df)
+    st.dataframe(transposed_matrix.astype(int))
 
 st.button("Determinant", on_click = to_determinant )
 if st.session_state.get("not_determinant"):
-    result = ml.determinant(editable_df)
-    if type(result) == str:
-        st.write(result)
+    deter = ml.determinant(editable_df)
+    if type(deter) == str:
+        st.write(deter)
     else:
-        st.write(round(result,5))
+        st.write(round(deter,5))
 
 st.button("Rank", on_click = to_rank)
 if st.session_state.get("not_rank"):
-    result = ml.rank(editable_df)
-    st.write(result.astype(int))
+    matrix_rank = ml.rank(editable_df)
+    st.write(matrix_rank.astype(int))
+
+st.button("Inverse Matrix", on_click = to_inverse)
+if st.session_state.get("not_inversed"):
+    inversed_matrix = ml.inverse(editable_df)
+    if type(inversed_matrix) != str:
+        st.dataframe(inversed_matrix)
+    else:
+        st.write(inversed_matrix)
+
+st.button("QR Factorization", on_click = to_qr)
+if st.session_state.get("not_qr"):
+    Q, R = ml.qr_factorization(editable_df)
+    st.write("Q:")
+    st.dataframe(Q)
+    st.write("R:")
+    st.dataframe(R)

@@ -12,3 +12,19 @@ def determinant(matrix):
 
 def rank(matrix):
     return np.linalg.matrix_rank(matrix)
+
+def inverse(matrix):
+    det = determinant(matrix)
+    if type(det) != str:
+        if det != 0:
+            result = np.linalg.inv(matrix)
+            return result
+        else:
+            return "Khong kha nghich"
+    else:
+        return "Khong la ma tran vuong"
+
+def qr_factorization(matrix):
+    qr_matrix = np.array(matrix)
+    q,r = np.linalg.qr(qr_matrix)
+    return (q, r)
